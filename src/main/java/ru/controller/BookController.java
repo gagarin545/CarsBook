@@ -7,19 +7,72 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.entity.Book;
 import ru.service.Bookservice;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
 public class BookController {
     @Autowired
     Bookservice bookservice;
+    List<Book> books;
 
     @GetMapping("book")
     public ModelAndView carlist() {
-        List<Book> books = bookservice.getAll();
+        books = bookservice.getAll();
         System.out.println("Выбрано -> " +books.size());
+      //  sortList(books);
+        return new ModelAndView("CarList", "cars", books);
+    }
+    @GetMapping("book/carNum")
+    public ModelAndView carNumSort() {
+        if(books != null && books.size() > 1 ) {
+            System.out.println("Выбрано -> " + books.size());
+            Collections.sort(books, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o1.getCarNum().compareTo(o2.getCarNum());
+                }
+            });
+        }
+        return new ModelAndView("CarList", "cars", books);
+    }
+    @GetMapping("book/carColor")
+    public ModelAndView carColorSort() {
+        if(books != null && books.size() > 1 ) {
+            System.out.println("Выбрано -> " + books.size());
+            Collections.sort(books, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o1.getCarColor().compareTo(o2.getCarColor());
+                }
+            });
+        }
+        return new ModelAndView("CarList", "cars", books);
+    }
+    @GetMapping("book/carYear")
+    public ModelAndView carYearSort() {
+        if(books != null && books.size() > 1 ) {
+            System.out.println("Выбрано -> " + books.size());
+            Collections.sort(books, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o1.getCarYear().compareTo(o2.getCarYear());
+                }
+            });
+        }
+        return new ModelAndView("CarList", "cars", books);
+    }
+    @GetMapping("book/carModel")
+    public ModelAndView carModelSort() {
+        if(books != null && books.size() > 1 ) {
+            System.out.println("Выбрано -> " + books.size());
+            Collections.sort(books, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o1.getCarModel().compareTo(o2.getCarModel());
+                }
+            });
+        }
         return new ModelAndView("CarList", "cars", books);
     }
     @GetMapping("CarForm")
@@ -44,7 +97,13 @@ public class BookController {
             book.setCarYear(Integer.valueOf(map.get("carYear")));
             book.setCarModel(map.get("carModel"));
             bookservice.saveCar(book);
+            return "redirect:/book";
         }
-        return "redirect:/book";
+       return "redirect:/CarForm";
+    }
+
+    private void sortList(List<Book> list) {
+        Collections.sort(list, Collections.reverseOrder());
+        list.forEach(x-> System.out.println(x.getCarNum()));
     }
 }

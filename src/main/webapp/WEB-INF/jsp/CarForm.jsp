@@ -7,9 +7,8 @@
   <h1>Марка машины</h1>
 
   <%--@elvariable id="car" type=""--%>
-  <form:form modelAttribute="car">
-
-  <table>
+  <form:form modelAttribute="car" id="id_spare">
+  <table id="id_spare">
     <tr>
       <td>Номер авто :</td>
       <td><form:input path="carNum"/></td>
@@ -30,8 +29,21 @@
     </tr>
   </table>
   </form:form>
+  <div id="id_parts" class="block" >
+    <span></span>
+  </div>
   <script>
+    $(document).ready(function()
+    {
+      $('#id_spare').change(function() { newOptions( 'spare', 'parts'); });
+    });
+    function newOptions(parentId, ddId) {
+      var jsonURL = '/id_' + ddId + "/" + $('#' + parentId + ' :selected').val() + '&' + model ;
+      var dd = $('#id_' + ddId);
+      dd.text(' '); //remove(); // Clean old options first.
+      dd.append($('<span />').text("Please select parent"));
 
+    }
   </script>
 
   </body>

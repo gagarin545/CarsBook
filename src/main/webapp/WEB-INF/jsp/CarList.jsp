@@ -24,5 +24,13 @@
           </c:forEach>
   </ul>
   <li><a href="/CarForm"> Добавить авто</a></li>
+  Сортировка по
+ <li><a href="/book/carNum">Номеру авто</a> </li>
+ <li><a href="/book/carModel">Модели</a> </li>
+ <li><a href="/book/carColor">Цвету</a> </li>
+ <li><a href="/book/carYear">Году выпуска</a> </li>
+
+  <script>
+  </script>
   </body>
 </html>
