@@ -8,4 +8,6 @@ import ru.entity.Book;
 public interface CarsBookRepository extends JpaRepository<Book, Long> {
     @Query("select b from Book b where b.carNum = :carNum")
     Book findByName(@Param("carNum") String carNum);
+    @Query("select b from Book b where max(b.dateRecord)")
+    Book findByPost();
 }

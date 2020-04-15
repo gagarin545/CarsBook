@@ -30,6 +30,9 @@
  <li><a href="/book/carColor">Цвету</a> </li>
  <li><a href="/book/carYear">Году выпуска</a> </li>
 
+
+  <li><a href="/book/stat">Статистика</a></li>
+
   <script>
   </script>
   </body>

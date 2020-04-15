@@ -75,6 +75,14 @@ public class BookController {
         }
         return new ModelAndView("CarList", "cars", books);
     }
+    @GetMapping("book/stat")
+    public ModelAndView carStat() {
+        if(books != null ) {
+            System.out.println("Выбрано -> " + books.size());
+
+        }
+        return new ModelAndView("CarList", "cars", books);
+    }
     @GetMapping("CarForm")
     public ModelAndView view() {
         Book book = new Book();
@@ -102,8 +110,5 @@ public class BookController {
        return "redirect:/CarForm";
     }
 
-    private void sortList(List<Book> list) {
-        Collections.sort(list, Collections.reverseOrder());
-        list.forEach(x-> System.out.println(x.getCarNum()));
-    }
+
 }

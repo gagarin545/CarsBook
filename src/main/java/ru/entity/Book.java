@@ -1,6 +1,11 @@
 package ru.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Calendar;
+
+import static java.time.ZonedDateTime.now;
 
 @Entity
 @Table(name ="carbook", schema = "public", catalog = "zlt36")
@@ -17,6 +22,9 @@ public class Book {
     private Integer carYear;
     @Column(name="carmodel", length = 40, nullable = false)
     private String carModel;
+    @Column(name="daterecord", nullable = false)
+    private Timestamp dateRecord = ( new Timestamp(Calendar.getInstance().getTimeInMillis())) ;
+
     public Book() {}
 
     public long getId() {        return id;    }
@@ -29,4 +37,6 @@ public class Book {
     public void setCarYear(Integer carYear) {        this.carYear = carYear;    }
     public String getCarModel() {        return carModel;    }
     public void setCarModel(String carModel) {        this.carModel = carModel;    }
+    public Timestamp getDateRecord() {        return dateRecord;    }
+    public void setDateRecord(Timestamp dateRecord) {        this.dateRecord = dateRecord;    }
 }
