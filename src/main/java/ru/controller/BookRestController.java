@@ -13,19 +13,6 @@ public class BookRestController {
     @Autowired
     Bookservice bookservice;
 
-    @PostMapping("CarForm")
-    public String add(@RequestParam Map<String, String> map) {
-        if( bookservice.getCar( map.get("carNum")) == null) {
-            Book book = new Book();
-            book.setCarNum( map.get("carNum"));
-            book.setCarColor(map.get("carColor"));
-            book.setCarYear(Integer.valueOf(map.get("carYear")));
-            book.setCarModel(map.get("carModel"));
-            bookservice.saveCar(book);
-            return "redirect:/book";
-        }
-        return "This number already is";
-    }
     @GetMapping("stat")
     public List<Book> carStat() {
         List<Book> books = new ArrayList<>();
@@ -39,36 +26,16 @@ public class BookRestController {
         if( books != null && books.size() > 1 ) {
             switch (id){
                 case "1":
-                    Collections.sort(books, new Comparator<Book>() {
-                        @Override
-                        public int compare(Book o1, Book o2) {
-                            return o1.getCarNum().compareTo(o2.getCarNum());
-                        }
-                    });
+                    books.sort(Comparator.comparing(Book::getCarNum));
                     break;
                 case "2":
-                    Collections.sort(books, new Comparator<Book>() {
-                        @Override
-                        public int compare(Book o1, Book o2) {
-                            return o1.getCarModel().compareTo(o2.getCarModel());
-                        }
-                    });
+                    books.sort(Comparator.comparing(Book::getCarModel));
                     break;
                 case "3":
-                    Collections.sort(books, new Comparator<Book>() {
-                        @Override
-                        public int compare(Book o1, Book o2) {
-                            return o1.getCarColor().compareTo(o2.getCarColor());
-                        }
-                    });
+                    books.sort(Comparator.comparing(Book::getCarColor));
                     break;
                 case "4":
-                    Collections.sort(books, new Comparator<Book>() {
-                        @Override
-                        public int compare(Book o1, Book o2) {
-                            return o1.getCarYear().compareTo(o2.getCarYear());
-                        }
-                    });
+                    books.sort(Comparator.comparing(Book::getCarYear));
             }
         }
         return books;

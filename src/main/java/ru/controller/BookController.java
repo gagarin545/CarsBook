@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.entity.Book;
 import ru.service.Bookservice;
-
 import java.util.*;
 
 @Controller
@@ -14,12 +13,11 @@ import java.util.*;
 public class BookController {
     @Autowired
     Bookservice bookservice;
-    private List<Book> books;
 
     @GetMapping("book")
     public ModelAndView carlist() {
-        books = bookservice.getAll();
-        System.out.println("Выбрано -> " +books.size());
+        List<Book> books = bookservice.getAll();
+        System.out.println("Выбрано -> " + books.size());
         return new ModelAndView("CarList", "cars", books);
     }
     @GetMapping("CarForm")
@@ -32,7 +30,7 @@ public class BookController {
         bookservice.deleteCar( id);
         return "redirect:/book";
     }
-    @PostMapping("CarForms")
+    @PostMapping("CarForm")
     public String add(@RequestParam Map<String, String> map) {
         if( bookservice.getCar( map.get("carNum")) == null) {
             Book book = new Book();
