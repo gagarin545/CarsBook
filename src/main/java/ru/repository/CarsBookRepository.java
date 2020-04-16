@@ -9,5 +9,7 @@ public interface CarsBookRepository extends JpaRepository<Book, Long> {
     @Query("select b from Book b where b.carNum = :carNum")
     Book findByName(@Param("carNum") String carNum);
     @Query("select b from Book b where b.dateRecord = ( select max(s.dateRecord) from Book s)")
-    Book findByPost();
+    Book findBymax();
+    @Query("select b from Book b where b.dateRecord = ( select min(s.dateRecord) from Book s)")
+    Book findBymin();
 }

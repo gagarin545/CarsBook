@@ -25,25 +25,14 @@
       <td>Цвет :</td>
       <td><form:input path="carColor"/></td>
     </tr>
+    <tr>
       <td colspan="4"><input type="submit" value="Save Changes"/></td>
     </tr>
+
   </table>
   </form:form>
-  <div id="id_parts" class="block" >
-    <span></span>
-  </div>
-  <script>
-    $(document).ready(function()
-    {
-      $('#id_spare').change(function() { newOptions( 'spare', 'parts'); });
-    });
-    function newOptions(parentId, ddId) {
-      var jsonURL = '/id_' + ddId + "/" + $('#' + parentId + ' :selected').val() + '&' + model ;
-      var dd = $('#id_' + ddId);
-      dd.text(' '); //remove(); // Clean old options first.
-      dd.append($('<span />').text("Please select parent"));
 
-    }
+  <script>
   </script>
 
   </body>

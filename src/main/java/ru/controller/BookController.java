@@ -14,79 +14,17 @@ import java.util.*;
 public class BookController {
     @Autowired
     Bookservice bookservice;
-    List<Book> books;
+    private List<Book> books;
 
     @GetMapping("book")
     public ModelAndView carlist() {
         books = bookservice.getAll();
         System.out.println("Выбрано -> " +books.size());
-      //  sortList(books);
-        return new ModelAndView("CarList", "cars", books);
-    }
-    @GetMapping("book/carNum")
-    public ModelAndView carNumSort() {
-        if(books != null && books.size() > 1 ) {
-            System.out.println("Выбрано -> " + books.size());
-            Collections.sort(books, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o1.getCarNum().compareTo(o2.getCarNum());
-                }
-            });
-        }
-        return new ModelAndView("CarList", "cars", books);
-    }
-    @GetMapping("book/carColor")
-    public ModelAndView carColorSort() {
-        if(books != null && books.size() > 1 ) {
-            System.out.println("Выбрано -> " + books.size());
-            Collections.sort(books, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o1.getCarColor().compareTo(o2.getCarColor());
-                }
-            });
-        }
-        return new ModelAndView("CarList", "cars", books);
-    }
-    @GetMapping("book/carYear")
-    public ModelAndView carYearSort() {
-        if(books != null && books.size() > 1 ) {
-            System.out.println("Выбрано -> " + books.size());
-            Collections.sort(books, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o1.getCarYear().compareTo(o2.getCarYear());
-                }
-            });
-        }
-        return new ModelAndView("CarList", "cars", books);
-    }
-    @GetMapping("book/carModel")
-    public ModelAndView carModelSort() {
-        if(books != null && books.size() > 1 ) {
-            System.out.println("Выбрано -> " + books.size());
-            Collections.sort(books, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o1.getCarModel().compareTo(o2.getCarModel());
-                }
-            });
-        }
-        return new ModelAndView("CarList", "cars", books);
-    }
-    @GetMapping("book/stat")
-    public ModelAndView carStat() {
-        if(books != null ) {
-            System.out.println("Выбрано -> " + books.size());
-
-        }
         return new ModelAndView("CarList", "cars", books);
     }
     @GetMapping("CarForm")
     public ModelAndView view() {
         Book book = new Book();
-        System.out.println("carForm -> " );
         return new ModelAndView("CarForm", "car", book);
     }
     @GetMapping("delete/{id}")
@@ -94,10 +32,8 @@ public class BookController {
         bookservice.deleteCar( id);
         return "redirect:/book";
     }
-
-    @PostMapping("CarForm")
+    @PostMapping("CarForms")
     public String add(@RequestParam Map<String, String> map) {
-
         if( bookservice.getCar( map.get("carNum")) == null) {
             Book book = new Book();
             book.setCarNum( map.get("carNum"));
@@ -109,6 +45,4 @@ public class BookController {
         }
        return "redirect:/CarForm";
     }
-
-
 }

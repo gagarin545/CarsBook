@@ -2,38 +2,83 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head><title>Список автомобилей</title></head>
-
   <head>
       <meta charset="UTF-8"/>
-      <title>Page Title</title>
       <link rel="profile"href="http://gmpg.org/xfn/11"/>
-      <style type="text/css">
-          body {font: 92.5%/1.6 Verdana, Tahoma, sans-serif;color: #333333;}
-          h1,h2{color: #ff6600;}
-          #id_part.block{margin:30px auto;width: 600px;}.block{border:1px solid #ccc;border-radius:4px;box-shadow:0 0 2px #ccc;}
-      </style>
   </head>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <body>
-
-
+  <br>
   <ul>
-      <c:forEach items="${cars}" var="car">
-      <li><a href="/delete/${car.id}"> <b>${car.carNum}</b>    <b>${car.carModel}</b>  <b>${car.carYear}</b>   <b>${car.carColor}</b> </a>
+      <label id="id_list">
+          <c:forEach items="${cars}" var="car">
+              <li><a href="/delete/${car.id}"> <b>${car.carNum}</b>    <b>${car.carModel}</b>  <b>${car.carYear}</b>   <b>${car.carColor}</b> </a>
           </c:forEach>
+      </label>
+
   </ul>
-  <li><a href="/CarForm"> Добавить авто</a></li>
+
+  <li><a href="/CarForm"> Добавить авто</a></li><br>
   Сортировка по
- <li><a href="/book/carNum">Номеру авто</a> </li>
- <li><a href="/book/carModel">Модели</a> </li>
- <li><a href="/book/carColor">Цвету</a> </li>
- <li><a href="/book/carYear">Году выпуска</a> </li>
+  <label for="id_sort" class="name-stat">
+      <select id="id_sort">
+          <option value="1" selected> Номеру авто </option>
+          <option value="2" selected> Модели </option>
+          <option value="3" selected> Цвету </option>
+          <option value="4" selected> Году выпуска </option>
+      </select>
+  </label><br><br>
 
+  <div id="id_stat">
+      <input type="button" value=" статистика " name="a" OnClick="newstat('stat', 'parts');">
+  </div>
 
-  <li><a href="/book/stat">Статистика</a></li>
+  <div id="id_parts" class="block" >
+      <span></span>
+  </div>
 
   <script>
+      $(document).ready(function()
+      {
+          $('#id_sort').change(function() { newMess( 'sort', 'list'); });
+      });
+      function newMess(parentId, ddId) {
+          var jsonURL = parentId + "/" + $('#id_' + parentId + ' :selected').val();
+          var dd = $('#id_' + ddId);
+          dd.text(" "); //remove(); // Clean old options first.
+          $.getJSON(jsonURL, function(opts) {
+              if (opts) {
+                  $.each(opts, function(key, value) {
+                      dd.append(
+                          $('<li>').append(
+                              $('<a>').attr('href',value.id)
+                                  .append(value.carNum)
+                                  .append(" ").append(value.carModel)
+                                  .append(" ").append(value.carYear)
+                                  .append(" ").append(value.carColor)
+                          ));
+                  });
+              }
+          });
+      }
+      function newstat(parentId, ddId) {
+          var jsonURL = parentId;
+          var dd = $('#id_' + ddId);
+          dd.text(" "); //remove(); // Clean old options first.
+          $.getJSON(jsonURL, function(opts) {
+              if (opts) {
+                  $.each(opts, function(key, value) {
+                      dd.append(
+                          $('<li>').append(  new Date(parseInt( value.dateRecord)))
+                              .append(" ").append(value.carNum)
+                              .append(" ").append(value.carModel)
+                              .append(" ").append(value.carYear)
+                              .append(" ").append(value.carColor)
+                          );
+                  });
+              }
+          });
+      }
   </script>
   </body>
 </html>

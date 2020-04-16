@@ -14,4 +14,6 @@ public class Bookservice {
     public void saveCar(Book book) { carsBookRepository.saveAndFlush(book); }
     public Book getCar(String carNum) { return carsBookRepository.findByName( carNum); }
     public void deleteCar(Integer id) {  carsBookRepository.deleteById(Long.valueOf(id)); }
+    public Book maxRecord() {  return carsBookRepository.findBymax(); }
+    public Book minRecord() {  return carsBookRepository.findBymin(); }
 }
