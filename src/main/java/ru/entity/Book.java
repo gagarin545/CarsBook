@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Objects;
 
 import static java.time.ZonedDateTime.now;
 
@@ -39,4 +40,22 @@ public class Book {
     public void setCarModel(String carModel) {        this.carModel = carModel;    }
     public Timestamp getDateRecord() {        return dateRecord;    }
     public void setDateRecord(Timestamp dateRecord) {        this.dateRecord = dateRecord;    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return id == book.id &&
+                Objects.equals(carNum, book.carNum) &&
+                Objects.equals(carColor, book.carColor) &&
+                Objects.equals(carYear, book.carYear) &&
+                Objects.equals(carModel, book.carModel) &&
+                Objects.equals(dateRecord, book.dateRecord);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, carNum, carColor, carYear, carModel, dateRecord);
+    }
 }

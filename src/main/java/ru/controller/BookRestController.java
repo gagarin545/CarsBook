@@ -36,6 +36,9 @@ public class BookRestController {
                     break;
                 case "4":
                     books.sort(Comparator.comparing(Book::getCarYear));
+                    break;
+                case "5":
+                    books.sort((Comparator.comparing(Book::getDateRecord)));
             }
         }
         return books;

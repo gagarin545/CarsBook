@@ -26,6 +26,7 @@
           <option value="2" selected> Модели </option>
           <option value="3" selected> Цвету </option>
           <option value="4" selected> Году выпуска </option>
+          <option value="5" selected> Дате регистрации </option>
       </select>
   </label><br><br>
 
@@ -51,7 +52,7 @@
                   $.each(opts, function(key, value) {
                       dd.append(
                           $('<li>').append(
-                              $('<a>').attr('href',value.id)
+                              $('<a>').attr('href', "delete/" + value.id)
                                   .append(value.carNum)
                                   .append(" ").append(value.carModel)
                                   .append(" ").append(value.carYear)
